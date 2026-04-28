@@ -55,6 +55,7 @@ if (process.env.NODE_ENV !== 'test') {
 
 // ─── Static Files ───────────────────────────────────────────────────────────
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+app.use('/', express.static(path.join(__dirname, '..', 'frontend')));
 
 // ─── Health Check ───────────────────────────────────────────────────────────
 app.get('/health', (req, res) => {
