@@ -2,9 +2,9 @@
  * @swagger
  * tags:
  *   name: Auth
- *   description: Authentication endpoints
+ *   description: Authentication & session management
  *
- * /api/auth/register:
+ * /api/v1/auth/register:
  *   post:
  *     summary: Register a new user
  *     tags: [Auth]
@@ -17,19 +17,19 @@
  *             $ref: '#/components/schemas/RegisterRequest'
  *     responses:
  *       201:
- *         description: User registered
+ *         description: User registered successfully
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/SuccessResponse'
  *       409:
- *         description: Email already exists
+ *         $ref: '#/components/responses/Forbidden'
  *       422:
- *         description: Validation error
+ *         $ref: '#/components/responses/ValidationError'
  *
- * /api/auth/login:
+ * /api/v1/auth/login:
  *   post:
- *     summary: Login and receive tokens
+ *     summary: Login — returns access + refresh tokens
  *     tags: [Auth]
  *     security: []
  *     requestBody:
@@ -40,13 +40,24 @@
  *             $ref: '#/components/schemas/LoginRequest'
  *     responses:
  *       200:
- *         description: Login successful, returns accessToken + refreshToken
+ *         description: Login successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/SuccessResponse'
+ *                 - type: object
+ *                   properties:
+ *                     data:
+ *                       $ref: '#/components/schemas/TokenResponse'
  *       401:
- *         description: Invalid credentials
+ *         $ref: '#/components/responses/Unauthorized'
+ *       422:
+ *         $ref: '#/components/responses/ValidationError'
  *
- * /api/auth/refresh:
+ * /api/v1/auth/refresh:
  *   post:
- *     summary: Refresh access token
+ *     summary: Rotate tokens using refresh token
  *     tags: [Auth]
  *     security: []
  *     requestBody:
@@ -55,45 +66,53 @@
  *         application/json:
  *           schema:
  *             type: object
+ *             required: [refreshToken]
  *             properties:
  *               refreshToken:
  *                 type: string
+ *                 description: Valid refresh token from login
  *     responses:
  *       200:
- *         description: New tokens issued
+ *         description: New token pair issued
  *       401:
- *         description: Invalid refresh token
+ *         $ref: '#/components/responses/Unauthorized'
  *
- * /api/auth/logout:
+ * /api/v1/auth/logout:
  *   post:
- *     summary: Logout current user
+ *     summary: Logout — invalidates refresh token
  *     tags: [Auth]
  *     responses:
  *       200:
- *         description: Logged out
+ *         description: Logged out successfully
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
  *
- * /api/auth/me:
+ * /api/v1/auth/me:
  *   get:
- *     summary: Get current authenticated user
+ *     summary: Get current authenticated user profile
  *     tags: [Auth]
  *     responses:
  *       200:
  *         description: Current user info
  *       401:
- *         description: Unauthorized
+ *         $ref: '#/components/responses/Unauthorized'
  */
 const express = require('express');
 const authController = require('../controllers/authController');
-const validate = require('../middleware/validate');
-const { registerSchema, loginSchema, refreshTokenSchema } = require('../utils/validationSchemas');
+const validate       = require('../middleware/validate');
 const { verifyToken } = require('../middleware/auth');
+const {
+  registerSchema,
+  loginSchema,
+  refreshTokenSchema,
+} = require('../utils/validationSchemas');
 
 const router = express.Router();
 
-router.post('/register', validate(registerSchema), authController.register);
-router.post('/login', validate(loginSchema), authController.login);
-router.post('/refresh', validate(refreshTokenSchema), authController.refresh);
-router.post('/logout', verifyToken, authController.logout);
-router.get('/me', verifyToken, authController.me);
+router.post('/register', validate(registerSchema),      authController.register);
+router.post('/login',    validate(loginSchema),         authController.login);
+router.post('/refresh',  validate(refreshTokenSchema),  authController.refresh);
+router.post('/logout',   verifyToken,                   authController.logout);
+router.get('/me',        verifyToken,                   authController.me);
 
 module.exports = router;

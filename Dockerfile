@@ -28,3 +28,5 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
   CMD wget -qO- http://localhost:5000/health || exit 1
 
 CMD ["node", "src/app.js"]
+
+docker run -d -p 6379:6379 redis

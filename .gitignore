@@ -1,7 +1,23 @@
+# ── Dependencies ──────────────────────────────────────────────────────────────
 node_modules/
+frontend-react/node_modules/
+
+# ── Environment (NEVER commit secrets) ───────────────────────────────────────
 .env
-logs/*.log
-uploads/
-coverage/
-.DS_Store
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+src/logs/*.log
+src/logs/*.json
 *.log
+
+# ── Uploads ───────────────────────────────────────────────────────────────────
+uploads/
+
+# ── Test Coverage ─────────────────────────────────────────────────────────────
+coverage/
+
+# ── OS / Editor ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

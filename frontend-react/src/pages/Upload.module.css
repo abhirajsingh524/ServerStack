@@ -1,0 +1,46 @@
+.page { max-width: 1000px; }
+.header { margin-bottom: 16px; }
+.header h1 { font-size: 22px; font-weight: 700; }
+.header p  { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+.securityBanner {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(64,201,126,.08);
+  border: 1px solid rgba(64,201,126,.25);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  font-size: 13px; color: var(--success);
+  margin-bottom: 24px;
+}
+
+.grid { display: grid; grid-template-columns: 1fr 320px; gap: 20px; }
+@media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+
+.card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+
+.field { margin-bottom: 16px; }
+.field label { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+.hint { font-weight: 400; color: var(--text2); font-size: 11px; }
+.error { font-size: 11px; color: var(--danger); margin-top: 4px; display: block; }
+.fileName { font-size: 12px; color: var(--accent2); margin-top: 6px; display: block; }
+
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 500px) { .row { grid-template-columns: 1fr; } }
+
+.submitBtn {
+  width: 100%; padding: 11px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: var(--radius);
+  font-size: 14px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background .2s; margin-top: 8px;
+}
+.submitBtn:hover:not(:disabled) { background: #5a52e0; }
+.submitBtn:disabled { opacity: .6; cursor: not-allowed; }
+
+.workflow { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+.workflow h3 { font-size: 14px; font-weight: 700; margin-bottom: 16px; }
+.step { display: flex; gap: 12px; margin-bottom: 16px; }
+.stepIcon { font-size: 18px; flex-shrink: 0; }
+.stepTitle { font-size: 13px; font-weight: 600; }
+.stepDesc  { font-size: 12px; color: var(--text2); margin-top: 2px; }

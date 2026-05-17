@@ -22,7 +22,7 @@ const login = async (req, res, next) => {
 const refresh = async (req, res, next) => {
   try {
     const { refreshToken } = req.body;
-    const tokens = await authService.refreshTokens(refreshToken);
+    const tokens = await authService.refreshTokens(refreshToken, req);
     return sendSuccess(res, 200, 'Tokens refreshed', tokens);
   } catch (err) {
     next(err);
@@ -31,7 +31,7 @@ const refresh = async (req, res, next) => {
 
 const logout = async (req, res, next) => {
   try {
-    await authService.logout(req.user._id);
+    await authService.logout(req.user._id, req);
     return sendSuccess(res, 200, 'Logged out successfully');
   } catch (err) {
     next(err);

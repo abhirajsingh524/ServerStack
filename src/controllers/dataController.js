@@ -1,12 +1,18 @@
 const dataService = require('../services/dataService');
-const { sendSuccess, sendError } = require('../utils/response');
+const { sendSuccess } = require('../utils/response');
 
 const createData = async (req, res, next) => {
   try {
-    // jsonData may come as a string from multipart form
+    // jsonData arrives as a string when sent via multipart/form-data
     let jsonData = req.body.jsonData;
     if (jsonData && typeof jsonData === 'string') {
-      try { jsonData = JSON.parse(jsonData); } catch { jsonData = null; }
+      try {
+        jsonData = JSON.parse(jsonData);
+      } catch {
+        const err = new Error('jsonData must be valid JSON');
+        err.statusCode = 422;
+        return next(err);
+      }
     }
 
     const data = await dataService.createData(
@@ -15,7 +21,7 @@ const createData = async (req, res, next) => {
       req.user,
       req
     );
-    return sendSuccess(res, 201, 'Data created successfully', data);
+    return sendSuccess(res, 201, 'Data record created', data);
   } catch (err) {
     next(err);
   }
@@ -23,8 +29,8 @@ const createData = async (req, res, next) => {
 
 const getAllData = async (req, res, next) => {
   try {
-    const records = await dataService.getAllData(req.user);
-    return sendSuccess(res, 200, 'Data retrieved', records);
+    const result = await dataService.getAllData(req.user, req.query);
+    return sendSuccess(res, 200, 'Data retrieved', result);
   } catch (err) {
     next(err);
   }
@@ -51,7 +57,7 @@ const updateData = async (req, res, next) => {
 const deleteData = async (req, res, next) => {
   try {
     await dataService.deleteData(req.params.id, req.user, req);
-    return sendSuccess(res, 200, 'Data deleted successfully');
+    return sendSuccess(res, 200, 'Data deleted');
   } catch (err) {
     next(err);
   }

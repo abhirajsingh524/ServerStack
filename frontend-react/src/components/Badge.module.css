@@ -1,0 +1,13 @@
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.purple { background: rgba(108,99,255,.2);  color: #6c63ff; }
+.teal   { background: rgba(0,212,170,.2);   color: #00d4aa; }
+.red    { background: rgba(255,77,109,.15); color: #ff4d6d; }
+.orange { background: rgba(255,169,77,.15); color: #ffa94d; }
+.green  { background: rgba(64,201,126,.15); color: #40c97e; }

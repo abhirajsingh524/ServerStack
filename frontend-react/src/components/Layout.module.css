@@ -1,0 +1,85 @@
+.shell { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+.logoTitle { font-size: 16px; font-weight: 700; color: var(--accent); }
+.logoSub   { font-size: 11px; color: var(--text2); }
+
+.navSection {
+  padding: 10px 20px 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text2);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  font-size: 14px;
+  color: var(--text2);
+  border-left: 3px solid transparent;
+  transition: all .15s;
+  cursor: pointer;
+}
+.navItem:hover { color: var(--text); background: var(--bg3); }
+.active {
+  color: var(--accent) !important;
+  background: rgba(108,99,255,.1);
+  border-left-color: var(--accent) !important;
+}
+
+.sidebarFooter {
+  margin-top: auto;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+}
+.userBadge { display: flex; align-items: center; gap: 10px; }
+.avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 13px; color: #fff;
+  flex-shrink: 0;
+}
+.userInfo { flex: 1; overflow: hidden; }
+.userName { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.userRole  { font-size: 11px; color: var(--text2); text-transform: capitalize; }
+.logoutBtn {
+  background: none; border: none;
+  color: var(--danger); padding: 4px;
+  border-radius: 6px; transition: background .15s;
+  display: flex; align-items: center;
+}
+.logoutBtn:hover { background: rgba(255,77,109,.1); }
+
+.main { margin-left: 240px; flex: 1; padding: 32px; }
+
+@media (max-width: 768px) {
+  .sidebar { width: 56px; }
+  .logoTitle, .logoSub, .navSection, .userInfo, .navItem span { display: none; }
+  .main { margin-left: 56px; padding: 16px; }
+}
