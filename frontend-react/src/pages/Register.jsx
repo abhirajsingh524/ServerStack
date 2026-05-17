@@ -63,7 +63,6 @@ const Register = () => {
             <label>Role</label>
             <select value={form.role} onChange={set('role')}>
               <option value="researcher">Researcher</option>
-              <option value="admin">Admin</option>
             </select>
           </div>
 
