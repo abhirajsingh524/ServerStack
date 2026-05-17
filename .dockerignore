@@ -1,9 +1,13 @@
 node_modules
+frontend-react/node_modules
 .env
 .git
 .gitignore
 coverage
 *.log
-uploads
+src/logs
 tests
 README.md
+docker-compose.yml
+.github
+frontend-dist
